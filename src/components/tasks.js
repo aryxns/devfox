@@ -9,7 +9,7 @@ function Tasks(props) {
     const [TasksDone, setTasksDone] = React.useState([])
     const [displayPoints, setdisplayPoints] = React.useState(0)
     const tasksDone = TasksDone.slice(0, 5)
-    console.log(tasksDone)
+    console.log(tasksDone)  
     function fetchData() {
         const db = firebase.firestore()
         var docRef = db.collection("Users").doc(username);
@@ -37,11 +37,11 @@ function Tasks(props) {
             console.error("Error writing document: ", error);
         });
         };
-    function addTask() {
+    function addTask(arg) {
         const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
         const db = firebase.firestore()
         db.collection("Users").doc(username).update({
-            unTasks: arrayUnion(task)
+            unTasks: arrayUnion(arg)
         })
         .then(function() {
             console.log("Document successfully written!");
@@ -64,7 +64,7 @@ function Tasks(props) {
             <div>
                 <div>
                     <input placeholder="Enter task here..." className="h-10 rounded p-3 w-5/6" value={task} onChange={e => setTask(e.target.value)}></input>
-                    <button className="ml-5 bg-green-300 p-2 rounded-lg text-sm w-1/12" onClick={addTask}>Add</button>
+                    <button className="ml-5 bg-green-300 p-2 border-black rounded-lg text-sm w-1/12" onClick={() => addTask(task)}>Add</button>
                 </div>
             </div>
   </div>
