@@ -3,7 +3,7 @@ import firebase from "../firebase";
 import Header from "./header"
 
 function Tasks(props) {
-    const [username, setUsername] = React.useState(props.location.aboutProps.name)
+    const username = (props.location.aboutProps.name)
     const [task, setTask] = React.useState("")
     const [todo, setTodo] = React.useState([])
     const [TasksDone, setTasksDone] = React.useState([])
