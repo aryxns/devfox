@@ -3,13 +3,26 @@ import firebase from "../firebase";
 import Header from "./header"
 
 function Tasks(props) {
-    const username = (props.location.aboutProps.name)
+    const username = localStorage.getItem('username')
     const [task, setTask] = React.useState("")
     const [todo, setTodo] = React.useState([])
     const [TasksDone, setTasksDone] = React.useState([])
     const [displayPoints, setdisplayPoints] = React.useState(0)
     const tasksDone = TasksDone.slice(0, 5)
-    console.log(tasksDone)  
+    React.useEffect(() => {
+        const username = localStorage.getItem('username')
+        function fetchData() {
+            const db = firebase.firestore()
+            var docRef = db.collection("Users").doc(username);
+            docRef.get().then(function(doc) {
+                console.log(doc.data().name)
+                setdisplayPoints(doc.data().points)
+                setTodo(doc.data().unTasks)
+                setTasksDone(doc.data().finTasks)
+            })
+        };
+        fetchData()
+      }, [])
     function fetchData() {
         const db = firebase.firestore()
         var docRef = db.collection("Users").doc(username);
@@ -38,6 +51,7 @@ function Tasks(props) {
         });
         };
     function addTask(arg) {
+        todo.push(task)
         const arrayUnion = firebase.firestore.FieldValue.arrayUnion;
         const db = firebase.firestore()
         db.collection("Users").doc(username).update({
@@ -54,7 +68,6 @@ function Tasks(props) {
     return(
         <div>
             <Header /> 
-            {fetchData()}
             <br/>
             <div class="font-mono mt-8 text-white w-40 rounded-100 shadow-xl align-center items-center mx-auto">
                 <h3 className="text-3xl mx-auto">Score:<span className="p-1 bg-green-500 rounded-lg">{displayPoints}</span></h3>
@@ -64,7 +77,7 @@ function Tasks(props) {
             <div>
                 <div>
                     <input placeholder="Enter task here..." className="h-10 rounded p-3 w-5/6" value={task} onChange={e => setTask(e.target.value)}></input>
-                    <button className="ml-5 bg-green-300 p-2 border-black rounded-lg text-sm w-1/12" onClick={() => addTask(task)}>Add</button>
+                    <button className="ml-5 bg-green-300 p-2 border-2 border-black rounded-lg text-sm w-1/12" onClick={() => addTask(task)}>Add</button>
                 </div>
             </div>
   </div>

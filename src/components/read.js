@@ -9,12 +9,26 @@ function Read(props) {
     const [postAnswers, setpostAnswers] = React.useState([])
     const [answers, setAnswers] = React.useState([])
     const [mypoints, setmyPoints] = React.useState(0)
+    React.useEffect(() => {
+      const username = localStorage.getItem('username')
+      function getUserPoints() {
+        const db = firebase.firestore()
+        const data = db.collection("Users").doc(username)
+        data.get().then(function(doc){setmyPoints(doc.data().points)})
+      };
+      getUserPoints()
+    }, [])
 
-    function getUserPoints() {
-      const db = firebase.firestore()
-      const data = db.collection("Users").doc(username)
-      data.get().then(function(doc){setmyPoints(doc.data().points)})
-    }
+    React.useEffect(() => {
+      function fetchData() {
+        const db = firebase.firestore()
+        const data = db.collection("Posts").doc(content.heading)
+        data.get().then(function(doc) {
+          setpostAnswers(doc.data().answers)
+      })
+      };
+      fetchData()
+    }, [content])
 
     function fetchData() {
       const db = firebase.firestore()
@@ -22,7 +36,6 @@ function Read(props) {
       data.get().then(function(doc) {
         setpostAnswers(doc.data().answers)
     })
-      //setPost(fetchedData.data())
     }
 
   function PostAnswer(arg) {
@@ -33,15 +46,13 @@ function Read(props) {
     }).then(function() {
       db.collection("Users").doc(username).update({
         points: mypoints + 1
-      })
+      }).then(fetchData())
     })
   }
 
     return(
       <div>
         <Header/>
-        {fetchData()}
-        {getUserPoints()}
         <div className="font-mono text-white h-full max-w max-h mx-16 p-6 bg-gray-900 mt-16 rounded-lg shadow-xl align-text-center">
             <h1 className="text-2xl">{content.heading}</h1>
             <p className="text-xl text-gray-500">{content.author}</p>
