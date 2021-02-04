@@ -20,7 +20,7 @@ const UserInput = () => {
   })
   .then(function() {
       console.log("Document successfully written!");
-      window.location.href = "/account_sucess"
+      window.location.href = "/account_success"
   })
   .catch(function(error) {
       console.error("Error writing document: ", error);
