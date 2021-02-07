@@ -40,7 +40,7 @@ function Tasks(props) {
         db.collection("Users").doc(username).update({
             unTasks: arrayRemove(arg),
             finTasks: arrayUnion(arg),
-            points: displayPoints + 10
+            points: displayPoints + 5
         })
         .then(function() {
             console.log("Document successfully written!");

@@ -1,0 +1,60 @@
+import React from "react";
+import firebase from "../firebase";
+import {Link} from "react-router-dom";
+import Header from "./header";
+
+function DailyUpdates() {
+    const [updates, setUpdates] = React.useState([])
+    const [upvotes, setUpvotes] = React.useState([])
+    const username = localStorage.getItem('username')
+    React.useEffect(() => {
+    const fetchData = async() => {
+      const db = firebase.firestore()
+      const data = await db.collection("Daily").get()
+      setUpdates(data.docs.map(doc => doc.data()))
+    }
+    fetchData()
+  }, [])
+
+
+  function UpdateUpvotes(arg) {
+      const db = firebase.firestore()
+      const data = db.collection("Daily").doc(arg)
+      data.get().then(function(doc) {
+    setUpvotes(doc.data().upvotes)}).then(function() {
+        db.collection("Daily").doc(arg).update({
+            upvotes: parseInt(upvotes + 1)
+        }).then(window.location.reload())
+    })
+
+  }
+
+ return(
+    <div>
+    <Header/>  
+    <Link to={{ pathname: '/home', aboutProps: {
+  name: username
+}}}><button className="text-white text-xl mx-auto ml-10 mt-8 bg-gray-500 p-2">Back</button></Link>
+    <div className="font-mono h-full max-w max-h mx-16 p-6 bg-gray-900 mt-16 rounded-lg shadow-xl align-text-center">
+        <h1 className="text-2xl font-bold text-white float-left">Daily Updates</h1>
+        <button className="text-l text-white float-right bg-blue-900 p-2 rounded-lg"><a href="/write_update">Write Update</a></button>
+        <br/>
+        <br/>
+        {updates.map(update => (
+            <div className="font-mono w-50 h-24 mx-16 p-6 bg-gray-200 mt-8 rounded-lg shadow-xl align-text-center">
+                <div className="float-left">
+                <h1 className="text-lg">{update.heading} <span className="text-sm text-gray-600">({update.author})</span></h1>
+                <p className="mt-1 text-sm">{update.content}</p>     
+                </div>           
+                <div className="float-right">
+                <p className="text-lg text-green-600 font-bold">{update.upvotes}</p>
+                <button onClick={() => UpdateUpvotes(update.heading)}>Upvote</button>
+                </div>
+            </div>
+        ))}
+    </div>
+    </div>
+ )   
+}
+
+export default DailyUpdates;

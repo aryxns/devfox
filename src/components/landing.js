@@ -4,9 +4,9 @@ import TypistLoop from "react-typist-loop";
 
 function LandingPage() {
     const work = [
-        "DevFox is a Gamified task manager",
+        "DevFox is a gamified task manager",
         "DevFox is a Community platform",
-        "DevFox is a Digital competition",
+        "DevFox is an accountability platform",
       ];
     return(
         <div>
@@ -17,15 +17,16 @@ function LandingPage() {
         <a href="/join"><button className="mr-2 bg-blue-300 font-mono rounded-xl"><h4 className="p-2">Join</h4></button></a>
       </div>
         </header>
-        <div id="body" className="">
-            <br/>
-            <div className="">
-            <img className="border-2 border-green mx-auto w-1/2 rounded-2xl" src="https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F67ef1feb-900b-44ad-8a36-5f448e323595%2Fhomepage.jpg?table=block&id=6279dfb4-18e3-4448-a02c-39b03b540bea&width=3070&userId=bb96057c-c11b-434e-ae26-ba5346c07d23&cache=v2" alt="as"/>
-            </div>
-            <br/>
-        </div>
+        <h1 className="mt-10 w-50 font-mono text-5xl text-white text-center uppercase"><span className="bg-green-300 text-black p-2">DevFox is a virtual tournament for new developers</span></h1>
+        <br/>
+        <p className="mt-3 w-50 font-mono text-xl text-white text-center uppercase"><span className="text-black bg-blue-300 p-1">DevFox runs on only React and Firebase</span></p>
+        <br/>
+        <br/>
+        <br/>
+        <hr className="bg-green-200 w-1/2 mx-auto"/>
+        <br/>
         <div className="mx-auto w-4/5 align-items-center text-center">
-        <h1 className="text-5xl ml-32 uppercase font-mono font-bold w-4/5 text-white">
+        <h1 className=" text-4xl ml-32 uppercase font-mono font-bold w-4/5 text-white">
             <TypistLoop interval={3000}>{work.map((text) => (
             <Typist key={text} startDelay={1000}>
               {text}
@@ -40,9 +41,11 @@ function LandingPage() {
         <div className="w-4/5 mx-auto text-center">
             <ul className="text-2xl text-white">
                 <li className="text-2xl text-white lowercase font-mono">- Complete Tasks to earn points</li>
-                <li className="text-2xl text-white lowercase font-mono">- Track your position on the leaderboard</li>
+                <li className="text-2xl text-white lowercase font-mono">- Compete on the leaderboard</li>
                 <li className="text-2xl text-white lowercase font-mono">- Ask questions to fellow community members</li>
                 <li className="text-2xl text-white lowercase font-mono">- Answer questions and earn points</li>
+                <li className="text-2xl text-white lowercase font-mono">- Post daily accountability updates</li>
+                <li className="text-2xl text-white lowercase font-mono">- education Quests <span className="text-gray-400">(coming soon)</span></li>
             </ul>
         </div>
         </div>

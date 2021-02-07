@@ -8,8 +8,6 @@ const UserInput = () => {
   console.log(name, username)
 
   const onUpdate = () => {
-    var provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider)
     const db = firebase.firestore()
     db.collection("Users").doc(username).set({
       name: name,
