@@ -38,7 +38,6 @@ function DailyUpdates() {
     <Link to={{ pathname: '/home', aboutProps: {
   name: username
 }}}><button className="text-white text-xl mx-auto ml-10 mt-8 bg-gray-500 p-2">Back</button></Link>
-    <h1 className="text-2xl mx-auto ml-80 w-50 align-center rounded-lg"><span className="p-2 bg-gray-900 rounded-lg shadow-2xl font-mono text-white">Post tweet-like daily updates to maintain public accountability and earn points</span></h1>
     <div className="font-mono h-full max-w max-h mx-16 p-6 bg-gray-900 mt-16 rounded-lg shadow-xl align-text-center">
         <h1 className="text-2xl font-bold text-white float-left">Daily Updates</h1>
         <button className="text-l text-white float-right bg-blue-900 p-2 rounded-lg"><a href="/write_update">Write Update</a></button>
