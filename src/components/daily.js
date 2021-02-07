@@ -5,7 +5,6 @@ import Header from "./header";
 
 function DailyUpdates() {
     const [updates, setUpdates] = React.useState([])
-    const [upvotes, setUpvotes] = React.useState([])
     const username = localStorage.getItem('username')
     React.useEffect(() => {
     const fetchData = async() => {
@@ -16,18 +15,22 @@ function DailyUpdates() {
     fetchData()
   }, [])
 
+  const fetchData = async() => {
+    const db = firebase.firestore()
+    const data = await db.collection("Daily").get()
+    setUpdates(data.docs.map(doc => doc.data()))
+  }
 
   function UpdateUpvotes(arg) {
       const db = firebase.firestore()
       const data = db.collection("Daily").doc(arg)
       data.get().then(function(doc) {
-    setUpvotes(doc.data().upvotes)}).then(function() {
-        db.collection("Daily").doc(arg).update({
-            upvotes: parseInt(upvotes + 1)
-        }).then(window.location.reload())
-    })
-
-  }
+        const currentV = doc.data().upvotes
+        data.update({
+          upvotes: currentV + 1
+        }).then(fetchData())
+      })
+    }
 
  return(
     <div>

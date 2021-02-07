@@ -76,7 +76,7 @@ function Tasks(props) {
         <div class="mb-6 font-mono w-3/4 lowercase h-auto p-4 align-center mx-auto mt-10 bg-gray-200 rounded-lg items-center ">
             <div>
                 <div>
-                    <input placeholder="Enter task here..." className="h-10 rounded p-3 w-5/6" value={task} onChange={e => setTask(e.target.value)}></input>
+                    <input placeholder="Enter task here..." className="h-10 rounded p-3 w-5/6" id="mytask" value={task} onChange={e => setTask(e.target.value)}></input>
                     <button className="ml-5 bg-green-300 p-2 border-2 border-black rounded-lg text-sm w-1/12" onClick={() => addTask(task)}>Add</button>
                 </div>
             </div>
